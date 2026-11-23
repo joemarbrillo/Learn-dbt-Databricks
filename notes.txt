@@ -1,0 +1,21 @@
+Chapter 2: Using Databricks
+
+Open and login to your Databricks account:
+Navigate to the SQL Warehouses and start it if not yet started.
+
+In Databricks, go to Workspace and navigate to your user account.
+Right-click to import a content from URL:
+https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/blob/main/project_2/scripts/load_raw.py
+
+Check  your catalog updated.
+
+Navigate to SQL Editor and make queries on the new tables.
+
+```sql
+CREATE CATALOG IF NOT EXISTS dev;
+CREATE CATALOG IF NOT EXISTS prod;
+```
+
+## Setup Repo
+---
+> uv init
