@@ -26,12 +26,11 @@ cleaned as (
         job_salary,
         job_schedule_type,
         job_work_from_home,
-        -- job_extensions_raw,
         {%- for keyword in extension_keywords %}
         ARRAY_CONTAINS(
             job_extensions,
             '{{ keyword }}'
-        ) AS has_{{keyword | lower | replace(' ', '_') }}
+        ) AS has_{{ slugify(keyword) }}
         {{- "," if not loop.last -}}
         {% endfor %},
         search_time as searched_at,

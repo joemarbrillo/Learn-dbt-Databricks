@@ -117,8 +117,8 @@ dbt build
 ```
 `If there are issues in creation, check the permissions for the user such as:`
 - [OP_NOT_SUPPORTED_READ_ONLY] CreateNamespace true is not supported in read-only session mode. SQLSTATE: 42KD1`
-
-    Go to Databricks SQL Editor to modify use of the catalog.
+  
+  Go to Databricks SQL Editor to modify use of the catalog.
 
 ```sql
 GRANT USE CATALOG ON CATALOG dev TO `joemar.brillo@outlook.com`;
@@ -160,4 +160,42 @@ select column_name, comment from dev.information_schema.columns;
 - {{ expressions here }}
 - {% statements here %}
 - {# comments here #}
+
+See [`stg_job_posting.sql`](analytics/models/staging/stg_job_postings.sql) for example
+
+## Macros
+
+> **Formats:**
+```macro
+{% macro <function_name>(params) %}
+<Jinja statements here>
+<or, Sql statements here>
+{% endmacro %}
+```
+
+> **Create slugify.sql**
+```bash
+code macros/slugify.sql
+```
+To run it
+```bash
+dbt compile --inline "{{ slugify('Paid time off') }}"
+```
+> **Installing macros**
+```bash
+code packages.yml
+dbt deps
+```
+
+> **From the dbt docs serve -> Macros sections, copy and paste the default__generate_schema_name macro to replace the generated schema:**
+```bash
+code macros/generate_schema_name.sql
+dbt compile --inline "{{ generate_schema_name('staging', none) }}"
+dbt build
+```
+
+> **Drop the old default_staging schema if needed**
+```sql
+DROP SCHEMA dev.default_staging;
+```
 
