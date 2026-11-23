@@ -1,0 +1,51 @@
+models:
+  - name: stg_job_postings
+    description: >
+      One row per posting per scrape day - a job re-scraped across
+      days keeps every row.
+    columns:
+      - name: job_id
+        description: The scrapers posting id
+      - name: search_term
+        description:  The role the scraper searched for
+      - name: search_date
+        description: Scrape day.
+      - name: searched_at
+        description: Scrape timestamp (search_time renamed)
+      - name: search_location
+        description: Location paremet the scraper searched under.
+      - name: job_title
+        description: Posting title as scraped/
+      - name: company_name
+        description: Employer name, trimmed.
+      - name: job_location
+        description: Posting location as scraped
+      - name: source_platform
+        description: Posting platform (job_via with the 'via ' replaced)
+      - name: job_schedule_type
+        description: As scraped; 12,252 nulls stay null - documented
+      - name: job_work_from_home
+        description: If flagged remote
+      - name: job_posted_at
+        description: 
+      - name: job_salary
+        description: 
+      - name: has_no_degree_mentioned
+        description: One of the job extensions
+      - name: has_health_insurance
+        description: One of the job extensions
+      - name: has_dental_insurance
+        description: One of the job extensions
+      - name: has_paid_time_off
+        description: One of the job extensions
+  
+  - name: stg_job_skills
+    description: >
+      One row per (job_id, skill_id) pair, from the raw table.
+    columns:
+      - name: job_id
+        description: Every pair's parent exists in stg_job_postings 
+      - name: skill_id
+        description: Skill key per pair
+      - name: skill_keyword
+        description: Skill text as extracted, trimmed
