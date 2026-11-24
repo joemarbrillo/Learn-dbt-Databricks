@@ -379,7 +379,62 @@ dbt has added new columns:
 - dbt_valid_from
 - dbt_valid_to
 
+## Incremental Models
 
+- `append` - insert into
+- `merge` - merge into
+- `delete+insert` - delete -> insert
+- `insert_overwrite` - insert overwrite
+- `microbatch` - replace where 
+```bash
+dbt run --select fct_job_postings
+```
+
+Refer to the dbt official documentation for templates for incremental loads [`here`.](https://docs.getdbt.com/docs/build/incremental-models?version=2)
+
+Update the fct_job_postings.
+```jinja
+{{ config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key='job_id'
+    )
+}}
+```
+
+Go to the SQL editor for Databricks to check for history information
+```sql
+describe history dev.marts.fct_job_postings
+```
+
+```bash
+dbt run --select fct_job_postings
+```
+
+> **Include the incremental check** if needed such as below:
+```jinja
+{% if is_incremental() %}
+
+WHERE search_date > (select max(search_date) from {{ this }})
+
+{% endif %}
+```
+
+Check some metrics in the warehouse
+```sql
+select operation,
+operationMetrics['numOutputRows'],
+operationMetrics['numSourceRows'],
+operationMetrics['numTargetRowsUpdated'],
+operationMetrics['numOutputRowsInserted']
+from (describe history dev.marts.fct_job_postings)
+where operation in ('CREATE OR REPLACE TABLE AS SELECT', 'MERGE');
+```
+
+> **Do a full refresh**
+```bash
+dbt run --full-refresh --select fct_job_postings
+```
 
 
 ## Summary
@@ -393,3 +448,8 @@ dbt has added new columns:
 - `dbt docs serve` - 
 - `dbt snapshot` - 
 
+> **Command options**:
+  - --select
+  - --full-refresh
+  - --inline
+  - --vars
