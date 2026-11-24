@@ -5,7 +5,7 @@ Navigate to the SQL Warehouses and start it if not yet started.
 
 In Databricks, go to Workspace and navigate to your user account.
 Right-click to import a content from URL:
-[**download load_raw.py**](https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/blob/main/project_2/scripts/load_raw.py)
+[**download load_raw.py**](load_raw.py). This is a copy from Luke's repo.
 
 > **Check your catalog updated.**
 
@@ -334,10 +334,53 @@ unit_tests:
       rows:
         - {job_id: 1, salary_min: 100000, salary_max: 1860000}
 ```
+
 Run it
 ```bash
 dbt test --select "test_type:unit"
 ```
+
+## Snapshots
+
+### SCD (Slowly Changing Dimensions)
+
+- `Type 0` - fixed dimension (change is ignored)
+- `Type 1` - overwrite (history is gone)
+- `Type 2` - add new row (one row per version)
+- `Type 3` - add new attribute (remembers exactly one change)
+- `Type 4` - history table (current stays small; versions live aside)
+- `Type 5` - type 1/2 hybrid 
+- `Type 6` - type 1/2/3 hybrid
+
+For dbt snapshots, it implements `Type 2` SCD.
+
+> **Let's create a snapshot model**
+```bash
+code models/staging/stg_job_postings_current.sql
+dbt show --select stg_job_postings_current
+```
+
+> **Query the search_date as parameter**
+```bash
+dbt show --select stg_job_postings_current --vars '{as_of:2025-09-01}'
+```
+
+> **Let's create the snapshots.yml file**
+
+Use the template provided at the official dbt documentation website. Go to the  [snapshot template website.](https://docs.getdbt.com/reference/snapshot-configs?version=2)
+```bash
+code snapshots/snapshots.yml
+dbt snapshot --vars '{as_of: 2025-07-01}'
+```
+Check that the new snapshot schema was generated.
+dbt has added new columns:
+- dbt_scd_id
+- dbt_updated_at
+- dbt_valid_from
+- dbt_valid_to
+
+
+
 
 ## Summary
 ### *dbt Commands*
@@ -348,4 +391,5 @@ dbt test --select "test_type:unit"
 - `dbt seed` - 
 - `dbt docs generate` - 
 - `dbt docs serve` - 
+- `dbt snapshot` - 
 
