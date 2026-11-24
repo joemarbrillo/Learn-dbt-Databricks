@@ -6,8 +6,14 @@ models:
     columns:
       - name: job_id
         description: The scrapers posting id
+        data_tests:
+          - not_null
       - name: search_term
         description:  The role the scraper searched for
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Data Engineer', 'Data Analyst', 'Data Scientist']
       - name: search_date
         description: Scrape day.
       - name: searched_at
@@ -24,6 +30,12 @@ models:
         description: Posting platform (job_via with the 'via ' replaced)
       - name: job_schedule_type
         description: As scraped; 12,252 nulls stay null - documented
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Part-time', 'Full-time', 'Contractor', 'Internship']
+              config:
+                severity: warn
       - name: job_work_from_home
         description: If flagged remote
       - name: job_posted_at
@@ -32,8 +44,12 @@ models:
         description: 
       - name: salary_min
         description: Extracted minimum salary
+        data_tests:
+          - non_negative
       - name: salary_max
         description: Extracted maximum salary
+        data_tests:
+          - non_negative
       - name: salary_avg
         description: Average salary
       - name: salary_currency

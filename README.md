@@ -258,11 +258,68 @@ dbt show --select in_demand_skills
 dbt show --select in_demand_skills --vars 'job_title: Data Engineer'
 ```
 
+## Unit Tests
+- Generic - such as not_null, unique, accepted_values
+- Singular - your own rule
+- Unit tests - check the logic
+
+> **Generic tests**
+
+Add the following within the search_term column:
+```yaml
+data_tests:
+  - accepted_values:
+      arguments:
+        values: ['Data Engineer']
+```
+And run a test
+```bash
+dbt test --select stg_job_postings
+```
+Add a data_tests for job_schedule_type with `warn` severity. The default severity is error.
+```yaml
+data_tests:
+  - accepted_values:
+      arguments:
+        values: ['Part-time', 'Full-time', 'Contractor', 'Internship']
+      config:
+        severity: warn
+```
+
+`Relationships` - add data_tests for skill_id in bridge_job_skills table in marts schema.
+```yaml
+data_tests:
+  - relationships:
+      arguments:
+        to: ref('dim_skill')
+        field: skill_id
+```
+Confirm and test the changes:
+```bash
+dbt test
+```
+
+> **Let's create our own generic test**
+```bash
+code tests/generic/non_negative.sql
+```
+
+> **Use it** - `add them to their respective fields`
+```yaml
+data_tests:
+  - non_negative
+```
+
+
 
 
 ## Summary
+### *dbt Commands*
 - `dbt compile` - you get the SQL
 - `dbt show` - you get the rows
-- dbt run - 
-- dbt build
-- dbt 
+- `dbt run` - 
+- `dbt build` - 
+- `dbt seed` - 
+- `dbt docs generate` - 
+- `dbt docs serve` - 
+
