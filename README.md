@@ -202,5 +202,45 @@ DROP SCHEMA dev.default_staging;
 > **Create a parse_salary macro**
 ```bash
 code macros/parse_salary.sql
+dbt compile --select stg_job_postings
+dbt build
+```
 
+## The Star Schema
+> **Add int_skill_observations.sql**
+```bash
+code models/intermediate/int_skill_observations.sql
+```
+
+> **Add intermediate.yml**
+```bash
+code models/intermediate/intermediate.yml
+```
+
+> **Create fact table**
+```bash
+code models/marts/fct_job_postings.sql
+dbt build
+```
+
+> **Create marts.yml**
+```bash
+code models/marts/marts.yml
+```
+
+> **The seeds**
+```bash
+code seeds/skill_categories.csv
+```
+
+> **Update the dbt_project.yml to add seeds section:**
+
+```bash
+dbt seed
+```
+
+```bash
+code models/marts/dim_company.sql
+code models/marts/dim_skill.sql
+code models/marts/bridge_job_skills.sql
 ```
