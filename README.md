@@ -263,7 +263,7 @@ dbt show --select in_demand_skills --vars 'job_title: Data Engineer'
 - Singular - your own rule
 - Unit tests - check the logic
 
-> **Generic tests**
+### Generic tests
 
 Add the following within the search_term column:
 ```yaml
@@ -310,8 +310,34 @@ data_tests:
   - non_negative
 ```
 
+### Singular tests
 
+Create a test to check validity of salaries
+```bash
+code tests/assert_salaries_sane.sql
+dbt test --select assert_salaries_sane
+```
 
+### Unit tests
+
+> **Add unit tests to the staging.yml for stg_job_postings model**
+```yaml
+unit_tests:
+  - name: test_parse_salary_shape
+    description: This handles a range, a single value, and no salary at all
+    model: stg_job_postings
+    given:
+      - input: source('jobs', 'raw_job_postings')
+        rows:
+          - {job_id: 1, job_salary: "100K-160K a year"}
+    expect:
+      rows:
+        - {job_id: 1, salary_min: 100000, salary_max: 1860000}
+```
+Run it
+```bash
+dbt test --select "test_type:unit"
+```
 
 ## Summary
 ### *dbt Commands*

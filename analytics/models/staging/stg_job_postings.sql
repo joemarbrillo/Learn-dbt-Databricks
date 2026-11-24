@@ -24,7 +24,6 @@ cleaned as (
         job_location,
         regexp_replace(job_via, 'via ', '') as source_platform,
         job_posted_at,
-        job_salary,
         job_schedule_type,
         job_work_from_home,
         {%- for keyword in extension_keywords %}
