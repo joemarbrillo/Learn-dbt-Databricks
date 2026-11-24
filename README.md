@@ -5,7 +5,7 @@ Navigate to the SQL Warehouses and start it if not yet started.
 
 In Databricks, go to Workspace and navigate to your user account.
 Right-click to import a content from URL:
-[**download load_raw.py**](load_raw.py). This is a copy from Luke's repo.
+[**download load_raw.py**](scripts/load_raw.py). This is a copy from Luke's repo.
 
 > **Check your catalog updated.**
 
