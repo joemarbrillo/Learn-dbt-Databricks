@@ -436,6 +436,21 @@ where operation in ('CREATE OR REPLACE TABLE AS SELECT', 'MERGE');
 dbt run --full-refresh --select fct_job_postings
 ```
 
+## The Final Project
+
+### Orchestrated Databricks Job
+
+> **Let's create a Databricks Repo**
+
+Login to Databricks and at Home, create a `Git folder`.
+
+Paste the GitHub Url once files are sync to GitHub.
+
+> **The Databricks Job**
+
+Navigate to Databricks Jobs & Pipelines
+
+
 
 ## Summary
 ### *dbt Commands*
