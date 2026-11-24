@@ -40,6 +40,7 @@ cleaned as (
         job_salary,
         {{ parse_salary('min', job_salary) }} AS salary_min,
         {{ parse_salary('max', job_salary) }} AS salary_max,
+        ({{ parse_salary('min') }} + {{ parse_salary('max') }}) / 2 as salary_avg,
         NULLIF(REGEXP_EXTRACT(job_salary, 'an? (year|hour|month|day|week)$', 1), '') AS salary_period,
         CASE
             WHEN job_salary IS NOT NULL
