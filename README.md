@@ -239,8 +239,30 @@ code seeds/skill_categories.csv
 dbt seed
 ```
 
+> **Create few more dimension tables**
 ```bash
 code models/marts/dim_company.sql
 code models/marts/dim_skill.sql
 code models/marts/bridge_job_skills.sql
 ```
+
+## Models vs Analyses
+```bash
+code analyses/in_demand_skills.sql
+dbt show --select in_demand_skills
+```
+
+` User var() function to pass variables such as {{ var("variable_name")}}`
+```bash
+dbt show --select in_demand_skills
+dbt show --select in_demand_skills --vars 'job_title: Data Engineer'
+```
+
+
+
+## Summary
+- `dbt compile` - you get the SQL
+- `dbt show` - you get the rows
+- dbt run - 
+- dbt build
+- dbt 
