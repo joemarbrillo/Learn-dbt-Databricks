@@ -36,7 +36,15 @@ cleaned as (
         search_time as searched_at,
         search_date,
         search_term,
-        search_location
+        search_location,
+        job_salary,
+        {{ parse_salary('min', job_salary) }} AS salary_min,
+        {{ parse_salary('max', job_salary) }} AS salary_max,
+        NULLIF(REGEXP_EXTRACT(job_salary, 'an? (year|hour|month|day|week)$', 1), '') AS salary_period,
+        CASE
+            WHEN job_salary IS NOT NULL
+            THEN COALESCE(NULLIF(TRIM(REGEXP_EXTRACT(job_salary, '^([^0-9]+)', 1)), ''), 'USD')
+        END AS salary_currency
     from parsed
 )
 select * from cleaned

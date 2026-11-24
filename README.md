@@ -199,3 +199,8 @@ dbt build
 DROP SCHEMA dev.default_staging;
 ```
 
+> **Create a parse_salary macro**
+```bash
+code macros/parse_salary.sql
+
+```
