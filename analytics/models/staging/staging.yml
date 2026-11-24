@@ -30,6 +30,14 @@ models:
         description: 
       - name: job_salary
         description: 
+      - name: salary_min
+        description: Extracted minimum salary
+      - name: salary_max
+        description: Extracted maximum salary
+      - name: salary_avg
+        description: Average salary
+      - name: salary_currency
+        description: Salary currency
       - name: has_no_degree_mentioned
         description: One of the job extensions
       - name: has_health_insurance
