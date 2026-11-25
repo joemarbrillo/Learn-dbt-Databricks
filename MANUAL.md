@@ -478,6 +478,22 @@ Paste the GitHub Url once files are sync to GitHub.
 
 In Databricks SQL Editor, or catalog, check the data.
 
+## Documentation
+
+```bash
+dbt docs generate
+mkdir ../docs
+```
+
+- Move the index.html, assets, info_schema to the docs folder.
+- Sync to GitHub
+- Move to GitHub website and go to `Settings` -> `Pages`
+- Select Source as `Deploy from a branch`
+- Branch `master`, folder `docs`. Save it.
+- Go to Actions and wait for it to build completely.
+- Copy and paste the URL provided.
+
+
 ## Summary
 ### *dbt Commands*
 - `dbt compile` - you get the SQL

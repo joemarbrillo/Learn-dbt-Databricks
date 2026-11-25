@@ -23,6 +23,8 @@ A production dbt pipeline on **Databricks** over 800K raw job-posting scrapes, r
 
 ## The dbt Pipeline
 
+![dbt lineage graph](images/lineage_graph.png)
+
 And the dbt features doing the work:
 | dbt Feature | How I Used It |
 | --- | --- |
@@ -56,6 +58,6 @@ The marts keep each job's `latest` scrape - the snapshot table keeps **every ver
 
 Structure, tests, and column descriptions were written alond the way - the docs site is a rendeting of work already done:
 
-**[GitHub Repo]()**
+See the models in action: [`Complete Analytics Docs`](https://joemarbrillo.github.io/Learn-dbt-Databricks/)
 
 See **[Manuals](MANUAL.md)** for the step by step guide.
